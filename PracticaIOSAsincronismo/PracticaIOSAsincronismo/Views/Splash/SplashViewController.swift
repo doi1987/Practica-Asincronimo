@@ -7,8 +7,6 @@
 
 import UIKit
 
-// Pantalla que aplica la lógica para mostrar la pantalla de login o Heroes
-
 class SplashViewController: UIViewController {
 	
 	// MARK: - Outlets

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 
 final class LoginController: UIViewController {
 	
@@ -19,12 +21,11 @@ final class LoginController: UIViewController {
 	@IBOutlet weak var loginButton: UIButton!
 	
 	private let viewModel: LoginViewModel
-	//	private let storeDataProvider: StoreDataProviderProtocol
+	private var cancellables: Set<AnyCancellable> = .init()
 	
 	// MARK: - Inits
-	init(viewModel: LoginViewModel = LoginViewModel()){//, storeDataProvider: StoreDataProviderProtocol) 
+	init(viewModel: LoginViewModel = LoginViewModel()){
 		self.viewModel = viewModel
-		//		self.storeDataProvider = storeDataProvider
 		super.init(nibName: String(describing: LoginController.self), bundle: nil)
 	}
 	
@@ -35,23 +36,23 @@ final class LoginController: UIViewController {
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Ocultamos el navigation bar porque no queremos tener opción de navegar Back
 		navigationController?.isNavigationBarHidden = true
 		addObservers()
 		setupView()
 	}
 	
 	func addObservers() {
-		viewModel.loginStateChanged = { [weak self] state in
+		viewModel.$loginState
+			.compactMap({ $0 })
+			.receive(on: DispatchQueue.main)
+			.sink(receiveValue: { [weak self] state in 
+				
 			switch state {
 			case .success:
 				self?.activityIndicator.stopAnimating()
-				// Navegamos a Heroes Controller
-				DispatchQueue.main.async {
-					// Si el login es con exito, navegamos a la pantalla de Heroes
-					let vc = HomeTableViewController()
-					self?.navigationController?.pushViewController(vc, animated: true)
-				}
+				let vc = HomeTableViewController()
+				self?.navigationController?.pushViewController(vc, animated: true)
+				
 			case .failed(_):
 				self?.activityIndicator.stopAnimating()
 				self?.showAlert()
@@ -64,39 +65,52 @@ final class LoginController: UIViewController {
 				self?.errorPassword.text = error
 				self?.errorPassword.isHidden = (error == nil || error?.isEmpty == true) 
 			}
-		}
+		}).store(in: &cancellables)
+		
+		emailTextField.textPublisher
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] text  in
+				guard let self = self, let text = text else { return }
+				
+				self.errorEmail.isHidden = self.viewModel.isValid(email: text)
+			}
+			.store(in: &cancellables)
+		
+		passwordTextField.textPublisher
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] text  in
+				guard let self = self, let text = text else { return }
+				
+				self.errorPassword.isHidden = self.viewModel.isValid(password: text)
+			}.store(in: &cancellables)
+				
+		loginButton.tapPublisher
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] in
+				guard let self = self, 
+						let email = self.emailTextField.text,
+					  let password = self.passwordTextField.text else { return }
+				
+				self.viewModel.loginWith(email: email, password: password )
+			}
+			.store(in: &cancellables)
 	}
 	
 	// MARK: - Actions
 	@IBAction func loginTapped(_ sender: Any) {
-		guard let email = emailTextField.text,
-			  let password = passwordTextField.text else { return }
 		
-		viewModel.loginWith(email: email, password: password )
 	}
 	
-	@objc func validFields(_ textfield: UITextField) {
-		loginButton.isEnabled = isEnabled()
-		switch textfield.accessibilityIdentifier {
-		case TextFieldType.email.rawValue:
-			validEmail(textfield)
-		case TextFieldType.password.rawValue:
-			validPassword(textfield)
-		default: return
-		}
-	}
-	
-	func validEmail(_ sender: UITextField) {
-		guard let text = sender.text else { return }
-		
-		errorEmail.isHidden = viewModel.isValid(email: text)
-	}
-	
-	func validPassword(_ sender: UITextField) {
-		guard let text = sender.text else { return }
-		
-		errorPassword.isHidden = viewModel.isValid(password: text)
-	}
+//	@objc func validFields(_ textfield: UITextField) {
+//		loginButton.isEnabled = isEnabled()
+//		switch textfield.accessibilityIdentifier {
+//		case TextFieldType.email.rawValue:
+//			validEmail(textfield)
+//		case TextFieldType.password.rawValue:
+//			validPassword(textfield)
+//		default: return
+//		}
+//	}
 }
 
 private extension LoginController {
@@ -105,8 +119,6 @@ private extension LoginController {
 		emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
 		passwordTextField.accessibilityIdentifier = TextFieldType.password.rawValue
 		passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-		emailTextField.addTarget(self, action: #selector(validFields(_:)), for: .editingChanged)
-		passwordTextField.addTarget(self, action: #selector(validFields(_:)), for: .editingChanged)
 		
 		loginButton.backgroundColor = .systemBlue
 		loginButton.layer.cornerRadius = 8

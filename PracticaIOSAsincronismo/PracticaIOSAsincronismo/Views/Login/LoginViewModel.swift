@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum LoginState: Equatable {
 	case loading
@@ -17,57 +18,53 @@ enum LoginState: Equatable {
 
 final class LoginViewModel {
 	
-	private let apiProvider: ApiProviderProtocol
+	private let loginUseCase: LoginUseCaseProtocol
 	
-	var loginStateChanged: ((LoginState) -> Void)?
+	@Published var loginState: LoginState?
 	
-	init(apiProvider: ApiProviderProtocol = ApiProvider()) {
-		self.apiProvider = apiProvider
+	init(loginUseCase: LoginUseCaseProtocol = LoginUseCase()) {
+		self.loginUseCase = loginUseCase
 	}
 	
 	func loginWith(email: String, password: String) {
-		self.loginStateChanged?(.loading)
+		loginState = .loading
 		
-		apiProvider.loginWith(email: email, password: password) { [weak self] result in
+		Task {
+			let result = await loginUseCase.loginWith(email: email, password: password) 
 			switch result {
 			case .success(_):
-				DispatchQueue.main.async {
-					self?.loginStateChanged?(.success)
-				}
+				loginState = .success
+				
 			case .failure(let error):
-				DispatchQueue.main.async {
-					self?.loginStateChanged?(.failed(error))
-				}
+				loginState = .failed(error)
 			}
 		}
 	}
 	
 	func onLoginButton(email: String?, password: String?) {
-		loginStateChanged?(.loading)
+		loginState = .loading
 		
-		// Check del email y password
-		guard let email = email, isValid(email: email) else {
-			loginStateChanged?(.loading)
-			loginStateChanged?(.showErrorEmail("Error en el email"))
-			return
+		Task {
+			guard let email = email, isValid(email: email) else {
+				loginState = .showErrorEmail("Error en el email")
+				return
+			}
+			
+			guard let password = password, isValid(password: password) else {
+				loginState = .showErrorPassword("Error en el password")
+				return
+			}
+			
+			loginWith(email: email, password: password)
 		}
-		
-		guard let password = password, isValid(password: password) else {
-			loginStateChanged?(.loading)
-			loginStateChanged?(.showErrorPassword("Error en el password"))
-			return
-		}
-		
-		loginWith(email: email, password: password)
 	}
 	
-	// Check email
 	func isValid(email: String) -> Bool {
-		email.isEmpty == false && email.contains("@")
+		loginUseCase.isValid(email: email)
 	}
 	
-	// Check password
+
 	func isValid(password: String) -> Bool {
-		password.isEmpty == false && password.count >= 4
+		loginUseCase.isValid(password: password)
 	}
 }

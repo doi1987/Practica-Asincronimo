@@ -16,6 +16,8 @@ protocol SecureDataProtocol {
 }
 
 final class SecureDataKeychain: SecureDataProtocol {
+	static let shared = SecureDataKeychain()
+	
 	private let keychain = KeychainSwift()
 	private let keyToken = "keyToken"
 	
