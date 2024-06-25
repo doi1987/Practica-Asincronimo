@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="transformationCell" id="gTV-IL-0wX" customClass="TransformationCollectionViewCell" customModule="Practica_IOS_Avanzado" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="494" height="249"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="494" height="249"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Iij-ji-4Yf">
+                        <rect key="frame" x="0.0" y="0.0" width="494" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="j5B-Gw-ElN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTb-A9-qa9" userLabel="Transformation">
+                        <rect key="frame" x="16" y="128" width="462" height="17"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Iij-ji-4Yf" secondAttribute="trailing" id="GfH-EC-Wnh"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zTb-A9-qa9" secondAttribute="bottom" id="OsN-cj-8Tj"/>
+                <constraint firstItem="zTb-A9-qa9" firstAttribute="top" secondItem="Iij-ji-4Yf" secondAttribute="bottom" constant="8" id="Pgs-4X-GZc"/>
+                <constraint firstItem="zTb-A9-qa9" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="QyJ-J9-0m9"/>
+                <constraint firstItem="Iij-ji-4Yf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TKL-Rv-TZp"/>
+                <constraint firstAttribute="trailing" secondItem="zTb-A9-qa9" secondAttribute="trailing" constant="16" id="azy-mR-Yhb"/>
+                <constraint firstItem="Iij-ji-4Yf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fXe-b9-xZD"/>
+                <constraint firstItem="zTb-A9-qa9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="ldK-dn-xCr"/>
+            </constraints>
+            <size key="customSize" width="494" height="249"/>
+            <connections>
+                <outlet property="transformationImage" destination="Iij-ji-4Yf" id="8SO-lQ-OzJ"/>
+                <outlet property="transformationName" destination="zTb-A9-qa9" id="wQV-mH-ckQ"/>
+            </connections>
+            <point key="canvasLocation" x="374" y="30"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleAspectFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="heroTableViewIdentifier" rowHeight="140" id="KGk-i7-Jjw" customClass="HeroTableViewCell" customModule="AppPetronesDavidOrtegaIglesias" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="rwj-BA-NH0" userLabel="heroImage">
+                        <rect key="frame" x="8" y="8" width="150" height="124"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="M57-ut-LO1"/>
+                            <constraint firstAttribute="height" priority="999" constant="84" id="TWn-71-JUF"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="heroName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ror-fb-cnA" userLabel="heroName">
+                        <rect key="frame" x="166" y="8" width="199" height="14.333333333333336"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="hghdgfdghfhfgdfgdjfghdoihdgfroihgsoihgshogssgigsfsgigihfoi" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64S-ys-egM" userLabel="heroDescription">
+                        <rect key="frame" x="166" y="24.333333333333336" width="199" height="107.66666666666666"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CMw-oL-2Rz" userLabel="chevronImage">
+                        <rect key="frame" x="369" y="64" width="16" height="12.333333333333329"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="FAv-Uy-PBB"/>
+                            <constraint firstAttribute="width" constant="16" id="V4i-Ne-KtK"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="64S-ys-egM" firstAttribute="trailing" secondItem="ror-fb-cnA" secondAttribute="trailing" id="3Xe-7c-Ez6"/>
+                    <constraint firstAttribute="bottom" secondItem="rwj-BA-NH0" secondAttribute="bottom" constant="8" id="3d1-sw-tPl"/>
+                    <constraint firstItem="CMw-oL-2Rz" firstAttribute="centerY" secondItem="rwj-BA-NH0" secondAttribute="centerY" id="CEV-F2-S8e"/>
+                    <constraint firstAttribute="trailing" secondItem="CMw-oL-2Rz" secondAttribute="trailing" constant="8" id="Co2-Ec-IBk"/>
+                    <constraint firstItem="64S-ys-egM" firstAttribute="leading" secondItem="ror-fb-cnA" secondAttribute="leading" id="LOR-06-Hbo"/>
+                    <constraint firstItem="CMw-oL-2Rz" firstAttribute="leading" secondItem="ror-fb-cnA" secondAttribute="trailing" constant="4" id="PJ0-as-pjJ"/>
+                    <constraint firstItem="rwj-BA-NH0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="QjC-gv-giU"/>
+                    <constraint firstItem="ror-fb-cnA" firstAttribute="leading" secondItem="rwj-BA-NH0" secondAttribute="trailing" constant="8" id="Qm1-je-lGe"/>
+                    <constraint firstItem="64S-ys-egM" firstAttribute="bottom" secondItem="rwj-BA-NH0" secondAttribute="bottom" id="el7-zY-uOh"/>
+                    <constraint firstItem="ror-fb-cnA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="r95-kQ-czO"/>
+                    <constraint firstItem="rwj-BA-NH0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="ssj-Md-yhX"/>
+                    <constraint firstItem="64S-ys-egM" firstAttribute="top" secondItem="ror-fb-cnA" secondAttribute="bottom" constant="2" id="yDQ-xt-fO8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="chevronImage" destination="CMw-oL-2Rz" id="oHp-hV-tjU"/>
+                <outlet property="heroDescription" destination="64S-ys-egM" id="GnS-oD-qyz"/>
+                <outlet property="heroImage" destination="rwj-BA-NH0" id="uBa-nF-8OJ"/>
+                <outlet property="heroName" destination="ror-fb-cnA" id="7Sq-B5-h2h"/>
+            </connections>
+            <point key="canvasLocation" x="-31.297709923664122" y="20.422535211267608"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.forward" catalog="system" width="97" height="128"/>
+        <image name="placeholder" width="480" height="360"/>
+    </resources>
+</document>
