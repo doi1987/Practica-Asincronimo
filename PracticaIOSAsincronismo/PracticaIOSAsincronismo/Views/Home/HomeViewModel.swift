@@ -10,33 +10,30 @@ import Foundation
 final class HomeViewModel {
 	private let secureDataKeychain: SecureDataProtocol
 	
-	// MARK: - Binding con UI
-	var homeStatusLoad: ((StatusLoad) -> Void)?
+	@Published var homeStatusLoad: StatusLoad?
 	
-	// MARK: - Use Case
-	let heroUseCase: HeroesUseCaseProtocol
+	private let homeUseCase: HomeUseCaseProtocol
 	
-	var dataHeroes: [HeroModel] = []
+	@Published var dataHeroes: [HeroModel] = []
 	
-	// MARK: - Init
-	init(heroUseCase: HeroesUseCaseProtocol = HeroesUseCase(),
+	init(homeUseCase: HomeUseCaseProtocol = HomeUseCase(),
 		 secureDataKeychain: SecureDataProtocol = SecureDataKeychain()) {
-		self.heroUseCase = heroUseCase
+		self.homeUseCase = homeUseCase
 		self.secureDataKeychain = secureDataKeychain
 	}
 	
-	// MARK: - GetHeroes
-	func loadHeroes() {
-		homeStatusLoad?(.loading)
+	func loadHeroes(name: String) {
+		homeStatusLoad = .loading
 		
-		heroUseCase.getHeroes { [weak self] heroes in
-			DispatchQueue.main.async {
-				self?.dataHeroes = heroes.sorted()
-				self?.homeStatusLoad?(.loaded)
-			}
-		} onError: { [weak self] networkError in
-			DispatchQueue.main.async {
-				self?.homeStatusLoad?(.error(error: networkError))
+		Task{
+			let result = await homeUseCase.getHeroes(name: name)
+			switch result {
+			case .success(let heroes):
+				dataHeroes = heroes.sorted()
+				homeStatusLoad = .loaded
+				
+			case .failure(let error):
+				homeStatusLoad = .error(error: error)
 			}
 		}
 	}

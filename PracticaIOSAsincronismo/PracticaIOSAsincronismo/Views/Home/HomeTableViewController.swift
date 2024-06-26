@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class HomeTableViewController: UIViewController {
 
@@ -13,8 +14,9 @@ final class HomeTableViewController: UIViewController {
 	@IBOutlet weak var tableViewOutlet: UITableView!
 	@IBOutlet weak var loadingView: UIView!
 	
-	// MARK: - View Model
+	private var cancellables: Set<AnyCancellable> = .init()
 	private var homeViewModel: HomeViewModel
+	private var homeStatusLoad: StatusLoad?
 	
 	// MARK: - Inits
 	init(homeViewModel: HomeViewModel = HomeViewModel()) {
@@ -35,7 +37,7 @@ final class HomeTableViewController: UIViewController {
 			UINib(
 				nibName: HeroTableViewCell.nibName, 
 				bundle: nil), forCellReuseIdentifier: HeroTableViewCell.identifier)
-		homeViewModel.loadHeroes()
+		homeViewModel.loadHeroes(name: "")
 		setObservers()
 		setupNavigationBar()
     }
@@ -43,20 +45,26 @@ final class HomeTableViewController: UIViewController {
 
 private extension HomeTableViewController {
 	func setObservers(){
-		homeViewModel.homeStatusLoad = { [weak self] status in
-			switch status {
-			case .loading:
-				self?.loadingView.isHidden = false
-			case .loaded:
-				self?.loadingView.isHidden = true
-				self?.tableViewOutlet.reloadData()
-			case .error(_):
-				self?.loadingView.isHidden = true
-			case .none:
-				print("Home None")
-			}
+		homeViewModel.$dataHeroes
+			.receive(on: DispatchQueue.main)
+			.sink(receiveValue: { _ in
+				self.loadingView.isHidden = true
+				self.tableViewOutlet.reloadData()
+			})
+			.store(in: &cancellables)
+//		homeStatusLoad = { [weak self] status in
+//			switch status {
+//			case .loading:
+//				self?.loadingView.isHidden = false
+//			case .loaded:
+//				self?.loadingView.isHidden = true
+//				self?.tableViewOutlet.reloadData()
+//			case .error(_):
+//				self?.loadingView.isHidden = true
+//			case .none:
+//				print("Home None")
+//			}
 		}
-	}
 	
 	func setupNavigationBar() {
 		navigationController?.isNavigationBarHidden = false
