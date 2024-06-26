@@ -10,7 +10,6 @@ import Foundation
 final class TransformationDetailViewModel {
 	let transformationDetail: TransformationModel
 	
-	// MARK: - Init
 	init(transformationDetail: TransformationModel) {
 		self.transformationDetail = transformationDetail
 	}

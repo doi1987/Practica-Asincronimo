@@ -19,31 +19,31 @@ final class TransformationTableUseCase: TransformationTableUseCaseProtocol {
 	}
 	
 	func getTransformations(heroId: String, onSuccess: @escaping ([TransformationModel]) -> Void, onError: @escaping (NetworkError) -> Void) {		
-		apiProvider.getTransformationsForHeroWith(id: heroId, completion: { completion in
-			switch completion {
-			case .success(let transformations):
-				onSuccess(transformations)
-			case .failure(let error):
-				onError(error)
-			}
-		})
+//		apiProvider.getTransformationsForHeroWith(id: heroId, completion: { completion in
+//			switch completion {
+//			case .success(let transformations):
+//				onSuccess(transformations)
+//			case .failure(let error):
+//				onError(error)
+//			}
+//		})
 		
 	}
 }
 
-// MARK: - Fake Succes
-final class TransformationTableUseCaseFakeSuccess: TransformationTableUseCaseProtocol {	
-	func getTransformations(heroId: String, onSuccess: @escaping ([TransformationModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-		let transformation = [TransformationModel(id: heroId, name: "Kaioken", description: "des", photo: nil)]
-		onSuccess(transformation)
-		
-	}
-}
-
-// MARK: - Fake Error
-
-final class TransformationTableUseCaseFakeError: TransformationTableUseCaseProtocol {
-	func getTransformations(heroId: String, onSuccess: @escaping ([TransformationModel]) -> Void, onError: @escaping (NetworkError) -> Void)  {
-		onError(.other)
-	}
-}
+//// MARK: - Fake Succes
+//final class TransformationTableUseCaseFakeSuccess: TransformationTableUseCaseProtocol {	
+//	func getTransformations(heroId: String, onSuccess: @escaping ([TransformationModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
+//		let transformation = [TransformationModel(id: heroId, name: "Kaioken", description: "des", photo: nil)]
+//		onSuccess(transformation)
+//		
+//	}
+//}
+//
+//// MARK: - Fake Error
+//
+//final class TransformationTableUseCaseFakeError: TransformationTableUseCaseProtocol {
+//	func getTransformations(heroId: String, onSuccess: @escaping ([TransformationModel]) -> Void, onError: @escaping (NetworkError) -> Void)  {
+//		onError(.other)
+//	}
+//}

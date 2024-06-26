@@ -9,15 +9,12 @@ import UIKit
 
 class TransformationDetailViewController: UIViewController {
 	
-	// MARK: - Outlets
 	@IBOutlet weak var transformationImage: UIImageView!	
 	@IBOutlet weak var transformationName: UILabel!	
 	@IBOutlet weak var transformationDescription: UILabel!
 	
-	// MARK: - Model
 	private var transformationDetailViewModel: TransformationDetailViewModel
 	
-	// MARK: - Inits
 	init(transformationDetailViewModel: TransformationDetailViewModel) {
 		self.transformationDetailViewModel = transformationDetailViewModel
 		super.init(nibName: nil, bundle: nil)
@@ -28,7 +25,6 @@ class TransformationDetailViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Lifecycle
 	override func viewDidLoad() {
         super.viewDidLoad()
 		setupView()
