@@ -7,12 +7,10 @@
 
 import Foundation
 
-// MARK: - Protocolo Home
 protocol HomeUseCaseProtocol {
 	func getHeroes(name: String) async -> Result<[HeroModel],NetworkError>
 }
 
-// MARK: - Clase homeUseCase
 final class HomeUseCase: HomeUseCaseProtocol {
 	private let homeRepository: HomeRepositoryProtocol
 	

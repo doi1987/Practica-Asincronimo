@@ -8,28 +8,23 @@
 import Foundation
 
 final class HeroDetailViewModel {
-	// Binding con UI
-	var heroDetailStatusLoad: ((HeroDetailStatusLoad) -> Void)?
-	
-	// Use Case
-	private let transformationsUseCase: TransformationTableUseCaseProtocol
-	
+
+	@Published var heroDetailStatusLoad: StatusLoad?
+	private let heroDetailUseCase: HeroDetailUseCaseProtocol
 	private var hero: HeroModel
-	private var dataTransformations: [TransformationModel] = .init()
-	private let group: DispatchGroup = .init()
-	private var error: NetworkError?
+	@Published var dataTransformations: [TransformationModel] = .init()
+//	private var error: NetworkError?
 	
-	// Init
 	init(hero: HeroModel,
-		 transformationsUseCase: TransformationTableUseCaseProtocol = TransformationTableUseCase()) {
+		 heroDetailUseCase: HeroDetailUseCaseProtocol = HeroDetailUseCase()) {
 		self.hero = hero
-		self.transformationsUseCase = transformationsUseCase
+		self.heroDetailUseCase = heroDetailUseCase
 	}
 	
 	func loadDetail() {
-		heroDetailStatusLoad?(.loading)
+		heroDetailStatusLoad = .loading
 		loadTransformations(heroId: hero.id)
-		updateState()
+//		updateState()
 	}
 	
 	func getHero() -> HeroModel? {
@@ -46,35 +41,36 @@ final class HeroDetailViewModel {
 }
 
 private extension HeroDetailViewModel {
-	// LLamada a getTransformations
 	func loadTransformations(heroId: String) {
-		group.enter()
-		transformationsUseCase.getTransformations(heroId: heroId) { [weak self] transformations in
-			self?.dataTransformations = transformations.sorted()
-			self?.group.leave()
-		} onError: { [weak self] networkError in			
-			self?.error = networkError
-			self?.group.leave()
-		}
-	}
-	
-	func updateState() {
-		group.notify(queue: .main) {
-			DispatchQueue.main.async { [weak self] in
-				guard let error = self?.error else { 
-					self?.heroDetailStatusLoad?(.loaded)
-					return
-				}
-				
-				self?.heroDetailStatusLoad?(.error(error: error))
+		Task{
+			let result = await heroDetailUseCase.getTransformationsForHeroWith(id: heroId)
+			switch result {
+			case .success(let transformations):
+				dataTransformations = transformations.sorted()
+				heroDetailStatusLoad = .loaded
+			case .failure(let error):
+				heroDetailStatusLoad = .error(error: error)
 			}
 		}
 	}
 }
-
-enum HeroDetailStatusLoad: Equatable {
-	case loading
-	case loaded
-	case error(error: NetworkError)
-	case none
-}
+//	func updateState() {
+//		group.notify(queue: .main) {
+//			DispatchQueue.main.async { [weak self] in
+//				guard let error = self?.error else { 
+//					self?.heroDetailStatusLoad?(.loaded)
+//					return
+//				}
+//				
+//				self?.heroDetailStatusLoad?(.error(error: error))
+//			}
+//		}
+//	}
+//}
+//
+//enum HeroDetailStatusLoad: Equatable {
+//	case loading
+//	case loaded
+//	case error(error: NetworkError)
+//	case none
+//}

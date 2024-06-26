@@ -52,6 +52,7 @@
 		634FD1212C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FD1202C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift */; };
 		634FD1232C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FD1222C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift */; };
 		63DF65342C2B26AA000FD212 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DF65332C2B26AA000FD212 /* HomeRepository.swift */; };
+		63DF65362C2C0694000FD212 /* HeroDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		634FD1202C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticaIOSAsincronismoUITests.swift; sourceTree = "<group>"; };
 		634FD1222C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticaIOSAsincronismoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		63DF65332C2B26AA000FD212 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
+		63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,10 +213,10 @@
 		633983482C2AB94E007D1CFC /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				633983442C2AB94E007D1CFC /* HeroDetailUseCase.swift */,
-				633983452C2AB94E007D1CFC /* HomeUseCase.swift */,
-				633983472C2AB94E007D1CFC /* TransformationTableUseCase.swift */,
 				631420832C2ACDE5005C8EF2 /* LoginUseCase.swift */,
+				633983452C2AB94E007D1CFC /* HomeUseCase.swift */,
+				633983442C2AB94E007D1CFC /* HeroDetailUseCase.swift */,
+				633983472C2AB94E007D1CFC /* TransformationTableUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -312,10 +314,10 @@
 		634FD12F2C29E49300A6ABC9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				633983752C2AC0A3007D1CFC /* HeroDetail */,
-				6339832B2C2AB930007D1CFC /* Home */,
-				633983672C2ABBB8007D1CFC /* Login */,
 				6339831F2C2AB92A007D1CFC /* Splash */,
+				633983672C2ABBB8007D1CFC /* Login */,
+				6339832B2C2AB930007D1CFC /* Home */,
+				633983752C2AC0A3007D1CFC /* HeroDetail */,
 				633983342C2AB93F007D1CFC /* TransformationDetail */,
 			);
 			path = Views;
@@ -338,6 +340,7 @@
 			children = (
 				631420852C2ACF14005C8EF2 /* LoginRepository.swift */,
 				63DF65332C2B26AA000FD212 /* HomeRepository.swift */,
+				63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				633983582C2AB999007D1CFC /* ApiProvider.swift in Sources */,
 				633983202C2AB92A007D1CFC /* LoginController.swift in Sources */,
 				633983542C2AB98E007D1CFC /* StatusLoad.swift in Sources */,
+				63DF65362C2C0694000FD212 /* HeroDetailRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

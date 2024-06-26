@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="heroDescription" destination="6RH-r3-aEd" id="dhX-YF-MYt"/>
                 <outlet property="heroName" destination="XX7-cI-mvA" id="Vju-Z5-iMr"/>
+                <outlet property="imageView" destination="V3v-U6-X1Q" id="l1T-J4-gGd"/>
                 <outlet property="loadingView" destination="8E0-d4-3BA" id="WpR-i3-sFk"/>
                 <outlet property="transformationCollectionView" destination="m89-0f-ABa" id="BEs-lp-Ibg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="pLJ-GA-xIy"/>

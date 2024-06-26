@@ -6,20 +6,19 @@
 //
 
 import UIKit
-import MapKit
-import CoreLocation
+import Combine
 
 class HeroDetailViewController: UIViewController {
-	// MARK: - Outlets
-	
+
+	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var heroName: UILabel!	
 	@IBOutlet weak var heroDescription: UITextView!
 	@IBOutlet weak var loadingView: UIView!
 	@IBOutlet weak var transformationCollectionView: UICollectionView!
 	
-	// MARK: - Properties -
 	private let heroDetailViewModel: HeroDetailViewModel
-	private let locationManager = CLLocationManager()
+	private var cancellables: Set<AnyCancellable> = .init()
+	private var heroDetailStatusLoad: StatusLoad?
 	
 	init(heroDetailViewModel: HeroDetailViewModel) {
 		self.heroDetailViewModel = heroDetailViewModel
@@ -31,14 +30,6 @@ class HeroDetailViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func configureUI() {
-		transformationCollectionView.register(UINib(nibName: TransformationCollectionViewCell.nibName,
-													bundle: nil), forCellWithReuseIdentifier: TransformationCollectionViewCell.identifier)
-		transformationCollectionView.dataSource = self
-		transformationCollectionView.delegate = self
-	}
-	
-	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setObservers()
@@ -49,19 +40,35 @@ class HeroDetailViewController: UIViewController {
 
 private extension HeroDetailViewController {
 	func setObservers(){
-		heroDetailViewModel.heroDetailStatusLoad = { [weak self] status in
-			switch status {
-			case .loading:
-				self?.loadingView.isHidden = false
-			case .loaded:
-				self?.loadingView.isHidden = true
-				self?.setupView()
-			case .error(_):
-				self?.loadingView.isHidden = true
-			case .none:
-				print("Hero Detail None")
-			}
-		}
+		
+		heroDetailViewModel.$dataTransformations
+			.receive(on: DispatchQueue.main)
+			.sink(receiveValue: { _ in
+				self.loadingView.isHidden = true
+				self.transformationCollectionView.reloadData()
+			}).store(in: &cancellables)
+	}
+
+//		heroDetailViewModel.heroDetailStatusLoad = { [weak self] status in
+//			switch status {
+//			case .loading:
+//				self?.loadingView.isHidden = false
+//			case .loaded:
+//				self?.loadingView.isHidden = true
+//				self?.setupView()
+//			case .error(_):
+//				self?.loadingView.isHidden = true
+//			case .none:
+//				print("Hero Detail None")
+//			}
+//		}
+	
+	
+	func configureUI() {
+		transformationCollectionView.register(UINib(nibName: TransformationCollectionViewCell.nibName,
+													bundle: nil), forCellWithReuseIdentifier: TransformationCollectionViewCell.identifier)
+		transformationCollectionView.dataSource = self
+		transformationCollectionView.delegate = self
 	}
 	
 	func setupView() {

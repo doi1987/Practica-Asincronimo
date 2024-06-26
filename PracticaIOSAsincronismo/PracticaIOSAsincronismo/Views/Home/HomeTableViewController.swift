@@ -10,7 +10,6 @@ import Combine
 
 final class HomeTableViewController: UIViewController {
 
-	// MARK: - Outlets
 	@IBOutlet weak var tableViewOutlet: UITableView!
 	@IBOutlet weak var loadingView: UIView!
 	
@@ -18,7 +17,6 @@ final class HomeTableViewController: UIViewController {
 	private var homeViewModel: HomeViewModel
 	private var homeStatusLoad: StatusLoad?
 	
-	// MARK: - Inits
 	init(homeViewModel: HomeViewModel = HomeViewModel()) {
 		self.homeViewModel = homeViewModel
 		super.init(nibName: nil, bundle: nil)
@@ -28,17 +26,11 @@ final class HomeTableViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()	
-		tableViewOutlet.delegate = self
-		tableViewOutlet.dataSource = self
-		tableViewOutlet.register(
-			UINib(
-				nibName: HeroTableViewCell.nibName, 
-				bundle: nil), forCellReuseIdentifier: HeroTableViewCell.identifier)
 		homeViewModel.loadHeroes(name: "")
 		setObservers()
+		configureUI()
 		setupNavigationBar()
     }
 }
@@ -66,10 +58,19 @@ private extension HomeTableViewController {
 //			}
 		}
 	
+	func configureUI() {
+		tableViewOutlet.delegate = self
+		tableViewOutlet.dataSource = self
+		tableViewOutlet.register(
+			UINib(
+				nibName: HeroTableViewCell.nibName, 
+				bundle: nil), forCellReuseIdentifier: HeroTableViewCell.identifier)
+	}
+	
 	func setupNavigationBar() {
 		navigationController?.isNavigationBarHidden = false
 		navigationItem.hidesBackButton = true
-		navigationItem.title = "Lista Heroes"
+		navigationItem.title = "Heros List"
 		
 		let item = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped(_:)))		
 		navigationItem.rightBarButtonItem  = item

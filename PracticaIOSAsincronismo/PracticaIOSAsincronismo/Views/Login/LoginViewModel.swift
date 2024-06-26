@@ -46,12 +46,12 @@ final class LoginViewModel {
 		
 		Task {
 			guard let email = email, isValid(email: email) else {
-				loginState = .showErrorEmail("Error en el email")
+				loginState = .showErrorEmail("Email error")
 				return
 			}
 			
 			guard let password = password, isValid(password: password) else {
-				loginState = .showErrorPassword("Error en el password")
+				loginState = .showErrorPassword("Password error")
 				return
 			}
 			

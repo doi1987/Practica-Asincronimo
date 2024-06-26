@@ -139,7 +139,7 @@ private extension LoginController {
 	}
 	
 	func showAlert() {
-		let alertController = UIAlertController(title: "Error", message: "El usuario o contraseña son incorrectos", preferredStyle: .alert)
+		let alertController = UIAlertController(title: "Error", message: "Incorrect user or password", preferredStyle: .alert)
 		let action = UIAlertAction(title: "OK", style: .default)
 		alertController.addAction(action)
 		

@@ -7,45 +7,53 @@
 
 import Foundation
 
-// MARK: - Protocolo Hero
 protocol  HeroDetailUseCaseProtocol {
-	func getHeroDetail(name: String, 
-					   onSuccess: @escaping ([HeroModel]) -> Void, 
-					   onError: @escaping (NetworkError) -> Void)
+	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError>
+//	func getHeroDetail(name: String, 
+//					   onSuccess: @escaping ([HeroModel]) -> Void, 
+//					   onError: @escaping (NetworkError) -> Void)
 }
 
-// MARK: - Clase Hero Use Case
 final class HeroDetailUseCase: HeroDetailUseCaseProtocol {	
-	private let apiProvider: ApiProviderProtocol
+	private let heroDetailRepository: HeroDetailRepositoryProtocol
 	
-	init(apiProvider: ApiProviderProtocol = ApiProvider()) {
-		self.apiProvider = apiProvider
+	init(heroDetailRepository: HeroDetailRepository = HeroDetailRepository()) {
+		self.heroDetailRepository = heroDetailRepository
 	}
 	
-	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-		apiProvider.getHeroesWith(name: name, completion: { completion in
-			switch completion {
-			case .success(let transformations):
-				onSuccess(transformations)
-			case .failure(let error):
-				onError(error)
-			}
-		})
+	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
+		let result = await heroDetailRepository.getTransformationsForHeroWith(id: id)
+		switch result {
+		case .success(let transformations):
+			return .success(transformations)
+		case .failure(let error):
+			return .failure(error)
+		}
 	}
+//	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
+//		apiProvider.getHeroesWith(name: name, completion: { completion in
+//			switch completion {
+//			case .success(let transformations):
+//				onSuccess(transformations)
+//			case .failure(let error):
+//				onError(error)
+//			}
+//		})
+	
 }
 
-// MARK: - Fake Succes
-final class HeroDetailUseCaseFakeSuccess: HeroDetailUseCaseProtocol {
-	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-		let hero = [HeroModel(id: "1", name: name, description: "Superman", photo: "", favorite: true)]
-		onSuccess(hero)
-		
-	}
-}
-
-// MARK: - Fake Error
-final class HeroDetailUseCaseFakeError: HeroDetailUseCaseProtocol {
-	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-		onError(.malformedURL)
-	}
-}
+//// MARK: - Fake Success
+//final class HeroDetailUseCaseFakeSuccess: HeroDetailUseCaseProtocol {
+//	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
+//		let hero = [HeroModel(id: "1", name: name, description: "Superman", photo: "", favorite: true)]
+//		onSuccess(hero)
+//		
+//	}
+//}
+//
+//// MARK: - Fake Error
+//final class HeroDetailUseCaseFakeError: HeroDetailUseCaseProtocol {
+//	func getHeroDetail(name: String, onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
+//		onError(.malformedURL)
+//	}
+//}
