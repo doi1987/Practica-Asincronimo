@@ -44,19 +44,17 @@ final class LoginViewModel {
 	func onLoginButton(email: String?, password: String?) {
 		loginState = .loading
 		
-		Task {
 			guard let email = email, isValid(email: email) else {
-				loginState = .showErrorEmail("Email error")
+				loginState = .showErrorEmail("Email error".localized())
 				return
 			}
 			
 			guard let password = password, isValid(password: password) else {
-				loginState = .showErrorPassword("Password error")
+				loginState = .showErrorPassword("Password error".localized())
 				return
 			}
 			
 			loginWith(email: email, password: password)
-		}
 	}
 	
 	func isValid(email: String) -> Bool {

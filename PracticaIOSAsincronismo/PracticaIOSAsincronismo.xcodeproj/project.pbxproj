@@ -25,12 +25,10 @@
 		633983372C2AB93F007D1CFC /* TransformationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983332C2AB93F007D1CFC /* TransformationDetailViewModel.swift */; };
 		6339833B2C2AB943007D1CFC /* TransformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983382C2AB943007D1CFC /* TransformationCollectionViewCell.swift */; };
 		6339833C2C2AB943007D1CFC /* TransformationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633983392C2AB943007D1CFC /* TransformationCollectionViewCell.xib */; };
-		633983412C2AB949007D1CFC /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6339833D2C2AB949007D1CFC /* Date+Utils.swift */; };
 		633983422C2AB949007D1CFC /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6339833E2C2AB949007D1CFC /* String+Utils.swift */; };
 		633983432C2AB949007D1CFC /* UIImageView+Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6339833F2C2AB949007D1CFC /* UIImageView+Remote.swift */; };
-		633983492C2AB94E007D1CFC /* HeroDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983442C2AB94E007D1CFC /* HeroDetailUseCase.swift */; };
+		633983492C2AB94E007D1CFC /* TransformationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983442C2AB94E007D1CFC /* TransformationsUseCase.swift */; };
 		6339834A2C2AB94E007D1CFC /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983452C2AB94E007D1CFC /* HomeUseCase.swift */; };
-		6339834C2C2AB94E007D1CFC /* TransformationTableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983472C2AB94E007D1CFC /* TransformationTableUseCase.swift */; };
 		6339834E2C2AB967007D1CFC /* TransformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6339834D2C2AB967007D1CFC /* TransformationModel.swift */; };
 		633983502C2AB977007D1CFC /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6339834F2C2AB977007D1CFC /* HeroModel.swift */; };
 		633983532C2AB98E007D1CFC /* LoginStatusLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633983512C2AB98D007D1CFC /* LoginStatusLoad.swift */; };
@@ -52,7 +50,7 @@
 		634FD1212C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FD1202C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift */; };
 		634FD1232C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FD1222C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift */; };
 		63DF65342C2B26AA000FD212 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DF65332C2B26AA000FD212 /* HomeRepository.swift */; };
-		63DF65362C2C0694000FD212 /* HeroDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */; };
+		63DF65362C2C0694000FD212 /* TranformationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DF65352C2C0694000FD212 /* TranformationsRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,12 +89,10 @@
 		633983332C2AB93F007D1CFC /* TransformationDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformationDetailViewModel.swift; sourceTree = "<group>"; };
 		633983382C2AB943007D1CFC /* TransformationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		633983392C2AB943007D1CFC /* TransformationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransformationCollectionViewCell.xib; sourceTree = "<group>"; };
-		6339833D2C2AB949007D1CFC /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		6339833E2C2AB949007D1CFC /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		6339833F2C2AB949007D1CFC /* UIImageView+Remote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Remote.swift"; sourceTree = "<group>"; };
-		633983442C2AB94E007D1CFC /* HeroDetailUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroDetailUseCase.swift; sourceTree = "<group>"; };
+		633983442C2AB94E007D1CFC /* TransformationsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformationsUseCase.swift; sourceTree = "<group>"; };
 		633983452C2AB94E007D1CFC /* HomeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
-		633983472C2AB94E007D1CFC /* TransformationTableUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformationTableUseCase.swift; sourceTree = "<group>"; };
 		6339834D2C2AB967007D1CFC /* TransformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformationModel.swift; path = "../../../../../Practica-IOS_Avanzado/Practica_IOS_Avanzado/Practica_IOS_Avanzado/Data/Model/TransformationModel.swift"; sourceTree = "<group>"; };
 		6339834F2C2AB977007D1CFC /* HeroModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeroModel.swift; path = "../../../../../Practica-IOS_Avanzado/Practica_IOS_Avanzado/Practica_IOS_Avanzado/Data/Model/HeroModel.swift"; sourceTree = "<group>"; };
 		633983512C2AB98D007D1CFC /* LoginStatusLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStatusLoad.swift; sourceTree = "<group>"; };
@@ -120,7 +116,7 @@
 		634FD1202C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticaIOSAsincronismoUITests.swift; sourceTree = "<group>"; };
 		634FD1222C29E1EA00A6ABC9 /* PracticaIOSAsincronismoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticaIOSAsincronismoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		63DF65332C2B26AA000FD212 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
-		63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailRepository.swift; sourceTree = "<group>"; };
+		63DF65352C2C0694000FD212 /* TranformationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranformationsRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,7 +198,6 @@
 		633983402C2AB949007D1CFC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				6339833D2C2AB949007D1CFC /* Date+Utils.swift */,
 				6339833E2C2AB949007D1CFC /* String+Utils.swift */,
 				6339833F2C2AB949007D1CFC /* UIImageView+Remote.swift */,
 				6339836D2C2ABCED007D1CFC /* Strings+Localized.swift */,
@@ -215,8 +210,7 @@
 			children = (
 				631420832C2ACDE5005C8EF2 /* LoginUseCase.swift */,
 				633983452C2AB94E007D1CFC /* HomeUseCase.swift */,
-				633983442C2AB94E007D1CFC /* HeroDetailUseCase.swift */,
-				633983472C2AB94E007D1CFC /* TransformationTableUseCase.swift */,
+				633983442C2AB94E007D1CFC /* TransformationsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -340,7 +334,7 @@
 			children = (
 				631420852C2ACF14005C8EF2 /* LoginRepository.swift */,
 				63DF65332C2B26AA000FD212 /* HomeRepository.swift */,
-				63DF65352C2C0694000FD212 /* HeroDetailRepository.swift */,
+				63DF65352C2C0694000FD212 /* TranformationsRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -505,7 +499,6 @@
 				633983592C2AB999007D1CFC /* SecureDataKeychain.swift in Sources */,
 				633983352C2AB93F007D1CFC /* TransformationDetailViewController.swift in Sources */,
 				6339834A2C2AB94E007D1CFC /* HomeUseCase.swift in Sources */,
-				6339834C2C2AB94E007D1CFC /* TransformationTableUseCase.swift in Sources */,
 				634FD1002C29E1E700A6ABC9 /* AppDelegate.swift in Sources */,
 				6339836E2C2ABCED007D1CFC /* Strings+Localized.swift in Sources */,
 				6339834E2C2AB967007D1CFC /* TransformationModel.swift in Sources */,
@@ -516,7 +509,6 @@
 				631420862C2ACF14005C8EF2 /* LoginRepository.swift in Sources */,
 				633983432C2AB949007D1CFC /* UIImageView+Remote.swift in Sources */,
 				631420842C2ACDE5005C8EF2 /* LoginUseCase.swift in Sources */,
-				633983412C2AB949007D1CFC /* Date+Utils.swift in Sources */,
 				633983302C2AB930007D1CFC /* HomeViewModel.swift in Sources */,
 				633983502C2AB977007D1CFC /* HeroModel.swift in Sources */,
 				6339832C2C2AB930007D1CFC /* HeroTableViewCell.swift in Sources */,
@@ -524,7 +516,7 @@
 				634FD1022C29E1E700A6ABC9 /* SceneDelegate.swift in Sources */,
 				633983532C2AB98E007D1CFC /* LoginStatusLoad.swift in Sources */,
 				633983372C2AB93F007D1CFC /* TransformationDetailViewModel.swift in Sources */,
-				633983492C2AB94E007D1CFC /* HeroDetailUseCase.swift in Sources */,
+				633983492C2AB94E007D1CFC /* TransformationsUseCase.swift in Sources */,
 				633983732C2AC09C007D1CFC /* HeroDetailViewController.swift in Sources */,
 				6339835A2C2AB999007D1CFC /* NetworkError.swift in Sources */,
 				6339832E2C2AB930007D1CFC /* HomeTableViewController.swift in Sources */,
@@ -532,7 +524,7 @@
 				633983582C2AB999007D1CFC /* ApiProvider.swift in Sources */,
 				633983202C2AB92A007D1CFC /* LoginController.swift in Sources */,
 				633983542C2AB98E007D1CFC /* StatusLoad.swift in Sources */,
-				63DF65362C2C0694000FD212 /* HeroDetailRepository.swift in Sources */,
+				63DF65362C2C0694000FD212 /* TranformationsRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

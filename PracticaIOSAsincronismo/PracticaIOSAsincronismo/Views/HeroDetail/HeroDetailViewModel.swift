@@ -8,23 +8,20 @@
 import Foundation
 
 final class HeroDetailViewModel {
-
 	@Published var heroDetailStatusLoad: StatusLoad?
-	private let heroDetailUseCase: HeroDetailUseCaseProtocol
-	private var hero: HeroModel
-	@Published var dataTransformations: [TransformationModel] = .init()
-//	private var error: NetworkError?
+	private let transformationsUseCase: TransformationsUseCaseProtocol
+	private let hero: HeroModel
+	private var dataTransformations: [TransformationModel] = []
 	
 	init(hero: HeroModel,
-		 heroDetailUseCase: HeroDetailUseCaseProtocol = HeroDetailUseCase()) {
+		 transformationsUseCase: TransformationsUseCaseProtocol = TransformationsUseCase()) {
 		self.hero = hero
-		self.heroDetailUseCase = heroDetailUseCase
+		self.transformationsUseCase = transformationsUseCase
 	}
 	
-	func loadDetail() {
+	func loadTransformations() {
 		heroDetailStatusLoad = .loading
 		loadTransformations(heroId: hero.id)
-//		updateState()
 	}
 	
 	func getHero() -> HeroModel? {
@@ -32,7 +29,7 @@ final class HeroDetailViewModel {
 	}
 	
 	func getTransformations() -> [TransformationModel] {
-		self.dataTransformations
+		dataTransformations
 	}
 	
 	func heroNameAndId() -> (name: String?, id: String?) {
@@ -42,8 +39,8 @@ final class HeroDetailViewModel {
 
 private extension HeroDetailViewModel {
 	func loadTransformations(heroId: String) {
-		Task{
-			let result = await heroDetailUseCase.getTransformationsForHeroWith(id: heroId)
+		Task {
+			let result = await transformationsUseCase.getTransformationsForHeroWith(id: heroId)
 			switch result {
 			case .success(let transformations):
 				dataTransformations = transformations.sorted()
@@ -54,23 +51,3 @@ private extension HeroDetailViewModel {
 		}
 	}
 }
-//	func updateState() {
-//		group.notify(queue: .main) {
-//			DispatchQueue.main.async { [weak self] in
-//				guard let error = self?.error else { 
-//					self?.heroDetailStatusLoad?(.loaded)
-//					return
-//				}
-//				
-//				self?.heroDetailStatusLoad?(.error(error: error))
-//			}
-//		}
-//	}
-//}
-//
-//enum HeroDetailStatusLoad: Equatable {
-//	case loading
-//	case loaded
-//	case error(error: NetworkError)
-//	case none
-//}

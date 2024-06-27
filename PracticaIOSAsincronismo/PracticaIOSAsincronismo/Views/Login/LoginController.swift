@@ -22,6 +22,8 @@ final class LoginController: UIViewController {
 	
 	private let viewModel: LoginViewModel
 	private var cancellables: Set<AnyCancellable> = .init()
+	private var user: String = ""
+	private var password: String = ""
 	
 	// MARK: - Inits
 	init(viewModel: LoginViewModel = LoginViewModel()){
@@ -37,8 +39,8 @@ final class LoginController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationController?.isNavigationBarHidden = true
-		addObservers()
 		setupView()
+		addObservers()
 	}
 	
 	func addObservers() {
@@ -52,16 +54,17 @@ final class LoginController: UIViewController {
 				self?.activityIndicator.stopAnimating()
 				let vc = HomeTableViewController()
 				self?.navigationController?.pushViewController(vc, animated: true)
-				
 			case .failed(_):
 				self?.activityIndicator.stopAnimating()
 				self?.showAlert()
 			case .loading:
 				self?.activityIndicator.startAnimating()
 			case .showErrorEmail(let error):
+				self?.activityIndicator.stopAnimating()
 				self?.errorEmail.text = error
 				self?.errorEmail.isHidden = (error == nil || error?.isEmpty == true)
 			case .showErrorPassword(let error):
+				self?.activityIndicator.stopAnimating()
 				self?.errorPassword.text = error
 				self?.errorPassword.isHidden = (error == nil || error?.isEmpty == true) 
 			}
@@ -70,37 +73,31 @@ final class LoginController: UIViewController {
 		emailTextField.textPublisher
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] text  in
-				guard let self = self, let text = text else { return }
-				
-				self.errorEmail.isHidden = self.viewModel.isValid(email: text)
+				guard let self = self,
+					  let text = text else { return }
+				self.user = text
 			}
 			.store(in: &cancellables)
 		
 		passwordTextField.textPublisher
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] text  in
-				guard let self = self, let text = text else { return }
-				
-				self.errorPassword.isHidden = self.viewModel.isValid(password: text)
+				guard let self = self,
+					  let text = text else { return }
+				self.password = text
 			}.store(in: &cancellables)
 				
 		loginButton.tapPublisher
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] in
-				guard let self = self, 
-						let email = self.emailTextField.text,
-					  let password = self.passwordTextField.text else { return }
+				guard let self = self else { return }
 				
-				self.viewModel.loginWith(email: email, password: password )
+				self.viewModel.onLoginButton(email: self.user, password: self.password )
 			}
 			.store(in: &cancellables)
 	}
 	
-	// MARK: - Actions
-	@IBAction func loginTapped(_ sender: Any) {
-		
-	}
-	
+
 //	@objc func validFields(_ textfield: UITextField) {
 //		loginButton.isEnabled = isEnabled()
 //		switch textfield.accessibilityIdentifier {
@@ -116,16 +113,18 @@ final class LoginController: UIViewController {
 private extension LoginController {
 	func setupView() {
 		emailTextField.accessibilityIdentifier = TextFieldType.email.rawValue
-		emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+		emailTextField.attributedPlaceholder = NSAttributedString(string: "Email".localized(), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
 		passwordTextField.accessibilityIdentifier = TextFieldType.password.rawValue
-		passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+		passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password".localized(), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
 		
 		loginButton.backgroundColor = .systemBlue
 		loginButton.layer.cornerRadius = 8
 		
 		#if DEBUG
-		emailTextField.text = "davidortegaiglesias@gmail.com"
-		passwordTextField.text = "abcdef"
+		self.user = "davidortegaiglesias@gmail.com"
+		emailTextField.text = user
+		self.password =  "abcdef"
+		passwordTextField.text = password
 		#endif
 	}
 	
@@ -139,7 +138,7 @@ private extension LoginController {
 	}
 	
 	func showAlert() {
-		let alertController = UIAlertController(title: "Error", message: "Incorrect user or password", preferredStyle: .alert)
+		let alertController = UIAlertController(title: "Error", message: "Incorrect user or password".localized(), preferredStyle: .alert)
 		let action = UIAlertAction(title: "OK", style: .default)
 		alertController.addAction(action)
 		

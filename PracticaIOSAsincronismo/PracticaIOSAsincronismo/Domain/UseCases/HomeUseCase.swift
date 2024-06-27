@@ -18,32 +18,26 @@ final class HomeUseCase: HomeUseCaseProtocol {
 		self.homeRepository = homeRepository
 	}
 	
-	func getHeroes(name: String) async -> Result<[HeroModel],NetworkError> {		
-		let result = await homeRepository.getHeroesWith(name: name)
-		switch result {
-		case .success(let heroes):
-			return .success(heroes)
-		case .failure(let error):
-			return .failure(error)
-		}
+	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {		
+		await homeRepository.getHeroesWith(name: name)
 	}	
 }
 
-//// MARK: - Fake Succes
-//final class HeroesUseCaseFakeSuccess: HeroesUseCaseProtocol {
-//	func getHeroes(onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-//		let heroes = [HeroModel(id: "1", name: "Diego", description: "Superman", photo: "", favorite: true) ,
-//					  HeroModel(id: "2", name: "Alejandro", description: "Spiderman", photo: "", favorite: false),
-//					  HeroModel(id: "3", name: "Rocio", description: "Super Woman", photo: "", favorite: true)]
-//		onSuccess(heroes)
-//	}
-//}
-//
-//// MARK: - Fake Error
-//
-//final class HeroesUseCaseFakeError: HeroesUseCaseProtocol {
-//	func getHeroes(onSuccess: @escaping ([HeroModel]) -> Void, onError: @escaping (NetworkError) -> Void) {
-//		onError(.noData)
-//		
-//	}
-//}
+// MARK: - Fake Succes
+final class HomeUseCaseFakeSuccess: HomeUseCaseProtocol {
+	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {
+		let heroes = [HeroModel(id: "1", name: "Diego", description: "Superman", photo: "", favorite: true) ,
+					  HeroModel(id: "2", name: "Alejandro", description: "Spiderman", photo: "", favorite: false),
+					  HeroModel(id: "3", name: "Rocio", description: "Super Woman", photo: "", favorite: true)]
+		return .success(heroes)
+	}
+}
+
+// MARK: - Fake Error
+
+final class HomeUseCaseFakeError: HomeUseCaseProtocol {
+	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {
+		.failure(.serverError)
+		
+	}
+}

@@ -13,8 +13,7 @@ final class HomeViewModel {
 	@Published var homeStatusLoad: StatusLoad?
 	
 	private let homeUseCase: HomeUseCaseProtocol
-	
-	@Published var dataHeroes: [HeroModel] = []
+	var dataHeroes: [HeroModel] = []
 	
 	init(homeUseCase: HomeUseCaseProtocol = HomeUseCase(),
 		 secureDataKeychain: SecureDataProtocol = SecureDataKeychain()) {
@@ -22,11 +21,11 @@ final class HomeViewModel {
 		self.secureDataKeychain = secureDataKeychain
 	}
 	
-	func loadHeroes(name: String) {
+	func loadHeroes() {
 		homeStatusLoad = .loading
 		
 		Task{
-			let result = await homeUseCase.getHeroes(name: name)
+			let result = await homeUseCase.getHeroes(name: "")
 			switch result {
 			case .success(let heroes):
 				dataHeroes = heroes.sorted()

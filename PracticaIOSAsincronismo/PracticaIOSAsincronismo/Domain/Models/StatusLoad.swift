@@ -11,5 +11,4 @@ enum StatusLoad: Equatable {
 	case loading
 	case loaded
 	case error(error: NetworkError)
-	case none
 }

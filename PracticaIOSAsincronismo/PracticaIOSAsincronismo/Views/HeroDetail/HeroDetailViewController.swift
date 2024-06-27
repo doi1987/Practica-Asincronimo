@@ -14,6 +14,7 @@ class HeroDetailViewController: UIViewController {
 	@IBOutlet weak var heroName: UILabel!	
 	@IBOutlet weak var heroDescription: UITextView!
 	@IBOutlet weak var loadingView: UIView!
+	@IBOutlet weak var transformationsTitle: UILabel!
 	@IBOutlet weak var transformationCollectionView: UICollectionView!
 	
 	private let heroDetailViewModel: HeroDetailViewModel
@@ -33,36 +34,29 @@ class HeroDetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setObservers()
+		setupView()
 		configureUI()
-		heroDetailViewModel.loadDetail()
+		heroDetailViewModel.loadTransformations()
 	}
 }
 
 private extension HeroDetailViewController {
 	func setObservers(){
-		
-		heroDetailViewModel.$dataTransformations
+		heroDetailViewModel.$heroDetailStatusLoad
+			.compactMap({ $0 })
 			.receive(on: DispatchQueue.main)
-			.sink(receiveValue: { _ in
-				self.loadingView.isHidden = true
-				self.transformationCollectionView.reloadData()
+			.sink(receiveValue: { [weak self] state in 
+				switch state {
+				case .loaded:
+					self?.loadingView.isHidden = true
+					self?.renderTransformations()
+				case .error(_): 
+					break
+				case .loading:
+					self?.loadingView.isHidden = false
+				}
 			}).store(in: &cancellables)
-	}
-
-//		heroDetailViewModel.heroDetailStatusLoad = { [weak self] status in
-//			switch status {
-//			case .loading:
-//				self?.loadingView.isHidden = false
-//			case .loaded:
-//				self?.loadingView.isHidden = true
-//				self?.setupView()
-//			case .error(_):
-//				self?.loadingView.isHidden = true
-//			case .none:
-//				print("Hero Detail None")
-//			}
-//		}
-	
+	}	
 	
 	func configureUI() {
 		transformationCollectionView.register(UINib(nibName: TransformationCollectionViewCell.nibName,
@@ -74,6 +68,19 @@ private extension HeroDetailViewController {
 	func setupView() {
 		heroName.text = heroDetailViewModel.getHero()?.name
 		heroDescription.text = heroDetailViewModel.getHero()?.description
+		transformationsTitle.text = "Transformations".localized()
+		
+		guard let urlImage = heroDetailViewModel.getHero()?.photo,
+			  let url = URL(string: urlImage) else {
+			imageView.image = UIImage(named: "noImage")
+			return
+		} 
+		
+		imageView.setImage(url: url)
+	}
+	
+	func renderTransformations() {
+		transformationsTitle.isHidden = heroDetailViewModel.getTransformations().isEmpty
 		transformationCollectionView.reloadData()
 	}
 }

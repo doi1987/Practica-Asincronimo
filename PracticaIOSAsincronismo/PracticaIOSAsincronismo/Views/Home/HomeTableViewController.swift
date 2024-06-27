@@ -28,37 +28,33 @@ final class HomeTableViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()	
-		homeViewModel.loadHeroes(name: "")
-		setObservers()
 		configureUI()
-		setupNavigationBar()
+		setObservers()
+		homeViewModel.loadHeroes()
     }
 }
 
 private extension HomeTableViewController {
 	func setObservers(){
-		homeViewModel.$dataHeroes
+		homeViewModel.$homeStatusLoad
+			.compactMap({ $0 })
 			.receive(on: DispatchQueue.main)
-			.sink(receiveValue: { _ in
-				self.loadingView.isHidden = true
-				self.tableViewOutlet.reloadData()
-			})
-			.store(in: &cancellables)
-//		homeStatusLoad = { [weak self] status in
-//			switch status {
-//			case .loading:
-//				self?.loadingView.isHidden = false
-//			case .loaded:
-//				self?.loadingView.isHidden = true
-//				self?.tableViewOutlet.reloadData()
-//			case .error(_):
-//				self?.loadingView.isHidden = true
-//			case .none:
-//				print("Home None")
-//			}
-		}
+			.sink(receiveValue: { [weak self] state in 
+				switch state {
+				case .loaded:
+					self?.loadingView.isHidden = true
+					self?.tableViewOutlet.reloadData()	
+				case .error(_): 
+					self?.loadingView.isHidden = true
+					self?.showAlert()
+				case .loading:
+					self?.loadingView.isHidden = false
+				}
+			}).store(in: &cancellables)
+	}
 	
 	func configureUI() {
+		setupNavigationBar()
 		tableViewOutlet.delegate = self
 		tableViewOutlet.dataSource = self
 		tableViewOutlet.register(
@@ -70,15 +66,25 @@ private extension HomeTableViewController {
 	func setupNavigationBar() {
 		navigationController?.isNavigationBarHidden = false
 		navigationItem.hidesBackButton = true
-		navigationItem.title = "Heros List"
+		navigationItem.title = "Heros List".localized()
 		
-		let item = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped(_:)))		
+		let item = UIBarButtonItem(title: "Logout".localized(), style: .plain, target: self, action: #selector(logoutTapped(_:)))		
 		navigationItem.rightBarButtonItem  = item
 	}
 	
 	@objc func logoutTapped(_ sender: UIBarButtonItem) {
 		homeViewModel.logout()
 		navigationController?.popToRootViewController(animated: true)
+	}
+	
+	func showAlert() {
+		let alertController = UIAlertController(title: "Error".localized(), message: "An error has occurred".localized(), preferredStyle: .alert)
+		let action = UIAlertAction(title: "Retry".localized(), style: .default) {[weak self] _ in
+			self?.homeViewModel.loadHeroes()
+		}
+		alertController.addAction(action)
+		
+		present(alertController, animated: true, completion: nil)
 	}
 }
 

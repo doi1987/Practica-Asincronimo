@@ -41,3 +41,40 @@ final class LoginUseCase: LoginUseCaseProtocol {
 		password.isEmpty == false && password.count >= 4
 	}
 }
+
+// MARK: - Fake Succes
+final class LoginUseCaseFakeSuccess: LoginUseCaseProtocol {
+	var emailIsValid: Bool = true
+	var passwordIsValid: Bool = true
+	
+	func isValid(password: String) -> Bool {
+		emailIsValid
+	}
+	
+	func isValid(email: String) -> Bool {
+		passwordIsValid
+	}
+	
+	func loginWith(email: String, password: String) async -> Result<String,NetworkError> {
+		.success("token")
+	}
+}
+
+// MARK: - Fake Error
+
+final class LoginUseCaseFakeError: LoginUseCaseProtocol {
+	var emailIsValid: Bool = true
+	var passwordIsValid: Bool = true
+	
+	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
+		.failure(.other)
+	}
+	
+	func isValid(password: String) -> Bool {
+		passwordIsValid
+	}
+	
+	func isValid(email: String) -> Bool {
+		emailIsValid
+	}
+}

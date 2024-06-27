@@ -22,3 +22,19 @@ final class LoginRepository: LoginRepositoryProtocol {
 		await apiProvider.loginWith(email: email, password: password)
 	}
 }
+
+
+// MARK: - Fake Succes
+final class LoginRepositoryFakeSuccess: LoginRepositoryProtocol {
+	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
+		.success("token")
+	}
+}
+
+// MARK: - Fake Error
+
+final class LoginRepositoryFakeError: LoginRepositoryProtocol {
+	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
+		.failure(.noData)
+	}
+}
