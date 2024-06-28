@@ -1,43 +1,35 @@
 //
-//  HomeUseCase.swift
-//  AppPetronesDavidOrtegaIglesias
+//  HeroUseCase.swift
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 23/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
 
-protocol HomeUseCaseProtocol {
+protocol HeroUseCaseProtocol {
 	func getHeroes(name: String) async -> Result<[HeroModel],NetworkError>
 }
 
-final class HomeUseCase: HomeUseCaseProtocol {
-	private let homeRepository: HomeRepositoryProtocol
+final class HeroUseCase: HeroUseCaseProtocol {
+	private let heroRepository: HeroRepositoryProtocol
 	
-	init(homeRepository: HomeRepositoryProtocol = HomeRepository()) {
-		self.homeRepository = homeRepository
+	init(heroRepository: HeroRepositoryProtocol = HeroRepository()) {
+		self.heroRepository = heroRepository
 	}
 	
 	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {		
-		await homeRepository.getHeroesWith(name: name)
+		await heroRepository.getHeroesWith(name: name)
 	}	
 }
 
-// MARK: - Fake Succes
-final class HomeUseCaseFakeSuccess: HomeUseCaseProtocol {
-	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {
-		let heroes = [HeroModel(id: "1", name: "Diego", description: "Superman", photo: "", favorite: true) ,
-					  HeroModel(id: "2", name: "Alejandro", description: "Spiderman", photo: "", favorite: false),
-					  HeroModel(id: "3", name: "Rocio", description: "Super Woman", photo: "", favorite: true)]
-		return .success(heroes)
-	}
-}
+// MARK: - HeroUseCaseMock
+final class HeroUseCaseMock: HeroUseCaseProtocol {
+	var result: Result<[HeroModel], NetworkError> = .success([HeroModel(id: "1", name: "Diego", description: "Superman", photo: "", favorite: true),
+															  HeroModel(id: "2", name: "Alejandro", description: "Spiderman", photo: "", favorite: false),
+								HeroModel(id: "3", name: "Rocio", description: "Super Woman", photo: "", favorite: true)])
 
-// MARK: - Fake Error
-
-final class HomeUseCaseFakeError: HomeUseCaseProtocol {
 	func getHeroes(name: String) async -> Result<[HeroModel], NetworkError> {
-		.failure(.serverError)
-		
+		result
 	}
 }

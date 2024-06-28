@@ -1,8 +1,8 @@
 //
-//  HeroDetailUseCases.swift
-//  AppPetronesDavidOrtegaIglesias
+//  TransformationslUseCases.swift
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 24/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
@@ -23,18 +23,10 @@ final class TransformationsUseCase: TransformationsUseCaseProtocol {
 	}
 }
 
-// MARK: - Fake Success
-final class TransformationsUseCaseFakeSuccess: TransformationsUseCaseProtocol {
+// MARK: - TransformationsUseCaseMock
+final class TransformationsUseCaseMock: TransformationsUseCaseProtocol {
+	var result: Result<[TransformationModel], NetworkError> = .success([TransformationModel(id: "1", name: "ozaru", description: "Es una bestia", photo: nil)])
 	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
-		let transformations = [TransformationModel(id: "1", name: "ozaru", description: "Es una bestia", photo: nil)]
-			return .success(transformations)
-		
-	}
-}
-
-// MARK: - Fake Error
-final class TransformationsUseCaseFakeError: TransformationsUseCaseProtocol {
-	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
-		.failure(.serverError)
+		result
 	}
 }

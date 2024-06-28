@@ -1,8 +1,8 @@
 //
 //  TransformationDetailViewModel.swift
-//  AppPetronesDavidOrtegaIglesias
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation

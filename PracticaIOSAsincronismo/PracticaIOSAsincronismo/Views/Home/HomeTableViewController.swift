@@ -1,8 +1,8 @@
 //
 //  HomeTableViewController.swift
-//  AppPetronesDavidOrtegaIglesias
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 22/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import UIKit
@@ -100,12 +100,10 @@ extension HomeTableViewController: UITableViewDelegate {
 
 // MARK: _ Extension DataSource
 extension HomeTableViewController: UITableViewDataSource {
-	// Numero de filas por seccion
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return homeViewModel.dataHeroes.count
 	}
 	
-	// Formato de la celda
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableViewOutlet.dequeueReusableCell(withIdentifier: HeroTableViewCell.identifier, for: indexPath) as? HeroTableViewCell else { return UITableViewCell() }
 		

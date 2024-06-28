@@ -24,17 +24,10 @@ final class LoginRepository: LoginRepositoryProtocol {
 }
 
 
-// MARK: - Fake Succes
-final class LoginRepositoryFakeSuccess: LoginRepositoryProtocol {
+// MARK: - LoginRepositoryMock
+final class LoginRepositoryMock: LoginRepositoryProtocol {
+	var result: Result<String, NetworkError> = .success("token")
 	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
-		.success("token")
-	}
-}
-
-// MARK: - Fake Error
-
-final class LoginRepositoryFakeError: LoginRepositoryProtocol {
-	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
-		.failure(.noData)
+		result
 	}
 }

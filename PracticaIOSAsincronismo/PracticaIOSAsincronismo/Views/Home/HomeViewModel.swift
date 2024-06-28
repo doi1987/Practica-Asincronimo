@@ -1,8 +1,8 @@
 //
 //  HomeViewModel.swift
-//  AppPetronesDavidOrtegaIglesias
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 23/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
@@ -12,12 +12,12 @@ final class HomeViewModel {
 	
 	@Published var homeStatusLoad: StatusLoad?
 	
-	private let homeUseCase: HomeUseCaseProtocol
+	private let heroUseCase: HeroUseCaseProtocol
 	var dataHeroes: [HeroModel] = []
 	
-	init(homeUseCase: HomeUseCaseProtocol = HomeUseCase(),
-		 secureDataKeychain: SecureDataProtocol = SecureDataKeychain()) {
-		self.homeUseCase = homeUseCase
+	init(heroUseCase: HeroUseCaseProtocol = HeroUseCase(),
+		 secureDataKeychain: SecureDataProtocol = SecureDataKeychain.shared) {
+		self.heroUseCase = heroUseCase
 		self.secureDataKeychain = secureDataKeychain
 	}
 	
@@ -25,7 +25,7 @@ final class HomeViewModel {
 		homeStatusLoad = .loading
 		
 		Task{
-			let result = await homeUseCase.getHeroes(name: "")
+			let result = await heroUseCase.getHeroes(name: "")
 			switch result {
 			case .success(let heroes):
 				dataHeroes = heroes.sorted()

@@ -14,9 +14,9 @@ protocol LoginUseCaseProtocol {
 }
 
 final class LoginUseCase: LoginUseCaseProtocol {
-	private let loginRepository: LoginRepository
+	private let loginRepository: LoginRepositoryProtocol
 	
-	init(loginRepository: LoginRepository = LoginRepository()) {
+	init(loginRepository: LoginRepositoryProtocol = LoginRepository()) {
 		self.loginRepository = loginRepository
 	}
 	
@@ -42,8 +42,9 @@ final class LoginUseCase: LoginUseCaseProtocol {
 	}
 }
 
-// MARK: - Fake Succes
-final class LoginUseCaseFakeSuccess: LoginUseCaseProtocol {
+// MARK: - LoginUseCaseMock
+final class LoginUseCaseMock: LoginUseCaseProtocol {
+	var result: Result<String,NetworkError> = .success("token")
 	var emailIsValid: Bool = true
 	var passwordIsValid: Bool = true
 	
@@ -56,25 +57,6 @@ final class LoginUseCaseFakeSuccess: LoginUseCaseProtocol {
 	}
 	
 	func loginWith(email: String, password: String) async -> Result<String,NetworkError> {
-		.success("token")
-	}
-}
-
-// MARK: - Fake Error
-
-final class LoginUseCaseFakeError: LoginUseCaseProtocol {
-	var emailIsValid: Bool = true
-	var passwordIsValid: Bool = true
-	
-	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
-		.failure(.other)
-	}
-	
-	func isValid(password: String) -> Bool {
-		passwordIsValid
-	}
-	
-	func isValid(email: String) -> Bool {
-		emailIsValid
+		result
 	}
 }

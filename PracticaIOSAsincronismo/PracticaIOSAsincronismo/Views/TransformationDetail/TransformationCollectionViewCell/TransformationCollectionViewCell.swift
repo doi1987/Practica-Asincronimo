@@ -1,8 +1,8 @@
 //
 //  TransformationCollectionViewCell.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 12/6/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import UIKit

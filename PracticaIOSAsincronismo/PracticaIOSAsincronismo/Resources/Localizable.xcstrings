@@ -52,6 +52,23 @@
         }
       }
     },
+    "Error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
     "Heros List" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -161,6 +178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Transformations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transformaciones"
           }
         }
       }

@@ -1,18 +1,16 @@
 //
 //  ApiProvider.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/2/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
 
-// Endpoints de la api
 enum Endpoints {
 	case login
 	case heroes
 	case transformations
-	case locations
 	
 	func endpoint() -> String {
 		switch self {
@@ -22,21 +20,17 @@ enum Endpoints {
 			return "api/heros/all"
 		case .transformations:
 			return "api/heros/tranformations"
-		case .locations:
-			return "api/heros/locations"
 		}
 	}
 	
 	func httpMethod() -> String {
 		switch self {
-		case .login, .heroes, .transformations, .locations:
+		case .login, .heroes, .transformations:
 			return "POST"
 		}
 	}
 }
 
-
-// Crea request para un endpoint dado
 struct RequestProvider {
 	let host = URL(string: "https://dragonball.keepcoding.education")!
 	
@@ -67,17 +61,19 @@ protocol ApiProviderProtocol {
 }
 
 class ApiProvider: ApiProviderProtocol {
-	private var session: URLSession
-	private var requestProvider: RequestProvider
+	private let session: URLSession
+	private let requestProvider: RequestProvider
+	private let secureDataProvider: SecureDataProtocol
 	
 	init(session: URLSession = URLSession.shared,
-		 requestProvider: RequestProvider = RequestProvider()) {
+		 requestProvider: RequestProvider = RequestProvider(),
+		 secureDataProvider: SecureDataProtocol = SecureDataKeychain.shared) {
 		self.session = session
 		self.requestProvider = requestProvider
+		self.secureDataProvider = secureDataProvider
 	}
 	
 	
-	// Llamada al servicio login
 	func loginWith(email: String, password: String) async -> Result<String, NetworkError> {
 		guard let loginData = String(format: "%@:%@", email, password).data(using: .utf8)?.base64EncodedString() else {
 			return .failure(.dataFormatting)
@@ -100,7 +96,7 @@ class ApiProvider: ApiProviderProtocol {
 	}
 	
 	func getHeroesWith(name: String) async -> Result<[HeroModel], NetworkError> {
-		guard let token = SecureDataKeychain.shared.getToken() else {
+		guard let token = secureDataProvider.getToken() else {
 			return .failure(.tokenFormatError)
 		}
 		
@@ -119,7 +115,7 @@ class ApiProvider: ApiProviderProtocol {
 	}
 	
 	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
-		guard let token = SecureDataKeychain.shared.getToken() else {
+		guard let token = secureDataProvider.getToken() else {
 			return .failure(.tokenFormatError)
 		}
 		
@@ -156,7 +152,7 @@ extension ApiProvider {
 		}
 		
 		if let token = String(data: data, encoding: .utf8) {
-			SecureDataKeychain.shared.setToken(value: token)
+			secureDataProvider.setToken(value: token)
 			return token
 		} else {
 			throw NetworkError.tokenFormatError

@@ -1,20 +1,18 @@
 //
 //  SplashViewController.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/2/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import UIKit
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
 	
-	// MARK: - Outlets
 	@IBOutlet weak var splashActivityIndicator: UIActivityIndicatorView!
 	
 	private var secureData: SecureDataProtocol
 	
-	// MARK: - Inits
 	init(secureData: SecureDataProtocol = SecureDataKeychain()) {
 		self.secureData = secureData
 		super.init(nibName: String(describing: SplashViewController.self), bundle: nil)
@@ -24,7 +22,6 @@ class SplashViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.

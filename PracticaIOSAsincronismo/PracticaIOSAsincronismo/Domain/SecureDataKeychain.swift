@@ -1,8 +1,8 @@
 //
 //  SecureDataKeychain.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/2/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
@@ -34,8 +34,6 @@ final class SecureDataKeychain: SecureDataProtocol {
 	}
 }
 
-// Implementación del SEcureDataProtocol con Userdefaults
-// Se puede usar para Testing por ejemplo
 final class SecureDataUserDefaults: SecureDataProtocol {
 	
 	private let userDefaults = UserDefaults.standard

@@ -1,5 +1,5 @@
 //
-//  HeroDetailRepository.swift
+//  TransformationsRepository.swift
 //  PracticaIOSAsincronismo
 //
 //  Created by David Ortega Iglesias on 26/6/24.
@@ -23,18 +23,11 @@ final class TransformationsRepository: TransformationsRepositoryProtocol {
 	}
 }
 
-// MARK: - Fake Success
-final class TransformationsRepositoryFakeSuccess: TransformationsRepositoryProtocol {
+// MARK: - TransformationsRepositoryMock
+final class TransformationsRepositoryMock: TransformationsRepositoryProtocol {
+	var result: Result<[TransformationModel], NetworkError> = .success([TransformationModel(id: "1", name: "ozaru", description: "Es una bestia", photo: nil)])
+	
 	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
-		let transformations = [TransformationModel(id: "1", name: "ozaru", description: "Es una bestia", photo: nil)]
-			return .success(transformations)
-	}
-}
-
-// MARK: - Fake Error
-
-final class TransformationsRepositoryFakeError: TransformationsRepositoryProtocol {
-	func getTransformationsForHeroWith(id: String) async -> Result<[TransformationModel], NetworkError> {
-		.failure(.noData)
+		result
 	}
 }

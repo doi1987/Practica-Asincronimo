@@ -1,8 +1,8 @@
 //
 //  String+Utils.swift
-//  KCDragonBall
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 21/1/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation

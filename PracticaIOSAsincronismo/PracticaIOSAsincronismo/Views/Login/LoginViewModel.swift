@@ -1,8 +1,8 @@
 //
 //  LoginViewModel.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/2/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import Foundation
@@ -43,18 +43,28 @@ final class LoginViewModel {
 	
 	func onLoginButton(email: String?, password: String?) {
 		loginState = .loading
+		guard let email = email, let password = password else { return }
 		
-			guard let email = email, isValid(email: email) else {
-				loginState = .showErrorEmail("Email error".localized())
-				return
-			}
-			
-			guard let password = password, isValid(password: password) else {
-				loginState = .showErrorPassword("Password error".localized())
-				return
-			}
-			
-			loginWith(email: email, password: password)
+		var emailValid: Bool = true
+		var passValid: Bool = true
+		
+		if !isValid(email: email)  {
+			loginState = .showErrorEmail("Email error".localized())
+			emailValid = false
+		} else {
+			loginState = .showErrorEmail(nil)
+		}
+		
+		if !isValid(password: password) {
+			loginState = .showErrorPassword("Password error".localized())
+			passValid = false
+		} else {
+			loginState = .showErrorPassword(nil)
+		}
+		
+		guard emailValid, passValid else { return }
+		
+		loginWith(email: email, password: password)
 	}
 	
 	func isValid(email: String) -> Bool {

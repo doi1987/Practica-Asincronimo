@@ -1,8 +1,8 @@
 //
 //  LoginController.swift
-//  Practica_IOS_Avanzado
+//  PracticaIOSAsincronismo
 //
-//  Created by David Ortega Iglesias on 27/2/24.
+//  Created by David Ortega Iglesias on 24/6/24.
 //
 
 import UIKit
@@ -10,8 +10,6 @@ import Combine
 import CombineCocoa
 
 final class LoginController: UIViewController {
-	
-	// MARK: - Outlets
 	
 	@IBOutlet weak var emailTextField: UITextField!
 	@IBOutlet weak var errorEmail: UILabel!	
@@ -25,7 +23,6 @@ final class LoginController: UIViewController {
 	private var user: String = ""
 	private var password: String = ""
 	
-	// MARK: - Inits
 	init(viewModel: LoginViewModel = LoginViewModel()){
 		self.viewModel = viewModel
 		super.init(nibName: String(describing: LoginController.self), bundle: nil)
@@ -35,7 +32,6 @@ final class LoginController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationController?.isNavigationBarHidden = true
@@ -45,8 +41,8 @@ final class LoginController: UIViewController {
 	
 	func addObservers() {
 		viewModel.$loginState
-			.compactMap({ $0 })
 			.receive(on: DispatchQueue.main)
+			.compactMap({ $0 })
 			.sink(receiveValue: { [weak self] state in 
 				
 			switch state {
@@ -96,18 +92,6 @@ final class LoginController: UIViewController {
 			}
 			.store(in: &cancellables)
 	}
-	
-
-//	@objc func validFields(_ textfield: UITextField) {
-//		loginButton.isEnabled = isEnabled()
-//		switch textfield.accessibilityIdentifier {
-//		case TextFieldType.email.rawValue:
-//			validEmail(textfield)
-//		case TextFieldType.password.rawValue:
-//			validPassword(textfield)
-//		default: return
-//		}
-//	}
 }
 
 private extension LoginController {
